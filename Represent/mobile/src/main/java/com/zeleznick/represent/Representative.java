@@ -27,4 +27,15 @@ public class Representative {
         this.twitterHandle = twitterHandle;
         this.website = website;
     }
+
+    public static Representative[] getBaseReps() {
+        return new Representative[]{
+                    new Representative(R.drawable.peeta, "Peeta", "Mellark", "Tribute",
+                            "peeta@hotmail.com", "peeta_m", "peetabread.com"),
+                    new Representative(R.drawable.katniss, "Katniss", "Everdeen", "Tribute",
+                            "kat_fire@hotmail.com", "kittykat", "kool-kat.com"),
+                    new Representative(R.drawable.haymitch, "Haymitch", "Abernathy", "Victor",
+                            "haymitch@aa.com", "still_drinking", "404.com")
+                };
+    }
 }

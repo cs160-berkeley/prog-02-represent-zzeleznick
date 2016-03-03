@@ -27,23 +27,8 @@ public class RepsListFragment extends ListFragment {
 
 
     private RepAdapter mAdapter;
-    /*
-    public String firstName;
-    public String lastName;
-    public String party;
-    public String email;
-    public String twitterHandle;
-    public String website;/
-     */
-    final Representative reps[] = new Representative[]
-            {
-                new Representative(R.drawable.peeta, "Peeta", "Mellark", "Tribute",
-                        "peeta@hotmail.com", "peeta_m", "peetabread.com"),
-                new Representative(R.drawable.katniss, "Katniss", "Everdeen", "Tribute",
-                        "kat_fire@hotmail.com", "kittykat", "kool-kat.com"),
-                new Representative(R.drawable.haymitch, "Haymitch", "Abernathy", "Victor",
-                        "haymitch@aa.com", "still_drinking", "404.com")
-            };
+
+    final Representative reps[] = Representative.getBaseReps();
 
     ArrayList<Float> base_values = new ArrayList<>();
 
@@ -56,7 +41,6 @@ public class RepsListFragment extends ListFragment {
         base_values.add(5, 20f);
         return base_values;
     }
-
 
     static RepsListFragment init(int val) {
         RepsListFragment repList = new RepsListFragment();
@@ -76,7 +60,7 @@ public class RepsListFragment extends ListFragment {
         fragNum = getArguments() != null ? getArguments().getInt("val") : 1;
         Log.i("init_tag", "Found bundle value: " + fragNum);
         base_values = makeBase();
-        mAdapter = new RepAdapter(getActivity(), R.layout.listview_item_row, reps, base_values);
+        mAdapter = new RepAdapter(getActivity(), R.layout.listview_item_row, reps);
     }
 
     /**
@@ -106,6 +90,7 @@ public class RepsListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         Log.i("Zach FragmentList", "Item clicked: " + id);
         Intent intent = new Intent(getContext(), RepView.class);
+        intent.putExtra("repNumber", (int) id);
         startActivity(intent);
     }
 }

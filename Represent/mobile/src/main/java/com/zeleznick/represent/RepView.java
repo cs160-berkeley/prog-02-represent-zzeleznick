@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,31 +19,16 @@ import java.util.ArrayList;
 
 public class RepView extends FragmentActivity {
     int selected;
-    TextView unitsText;
     Button backButton;
-    Context globalContext;
+    ImageView imgIcon;
+    TextView endDateHeader;
+    TextView committeeHeader;
+    TextView recentBillsHeader;
+    EditText endDate;
+    EditText committees;
+    EditText recentBills;
 
-    final Representative reps[] = new Representative[]
-            {
-                    new Representative(R.drawable.peeta, "Peeta", "Mellark", "Tribute",
-                            "peeta@hotmail.com", "peeta_m", "peetabread.com"),
-                    new Representative(R.drawable.katniss, "Katniss", "Everdeen", "Tribute",
-                            "kat_fire@hotmail.com", "kittykat", "kool-kat.com"),
-                    new Representative(R.drawable.haymitch, "Haymitch", "Abernathy", "Victor",
-                            "haymitch@aa.com", "still_drinking", "404.com")
-            };
-
-    ArrayList<Float> base_values = new ArrayList<>();
-
-    public ArrayList<Float> makeBase() {
-        base_values.add(0, 100f);
-        base_values.add(1, 350f);
-        base_values.add(2, 200f);
-        base_values.add(3, 10f);
-        base_values.add(4, 12f);
-        base_values.add(5, 20f);
-        return base_values;
-    }
+    final Representative reps[] = Representative.getBaseReps();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,8 +36,25 @@ public class RepView extends FragmentActivity {
         setContentView(R.layout.singleview);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Detailed View");
-        Log.i("Rep View", "loaded");
-        globalContext = getBaseContext(); // getApplicationContext();
+        Bundle bundle = getIntent().getExtras();
+        int repNumber = bundle.getInt("repNumber");
+
+        Log.i("Rep View", "loaded with rep " + repNumber);
+
+        Representative rep = reps[repNumber];
+        imgIcon = (ImageView) findViewById(R.id.imgIcon);
+        imgIcon.setImageResource(rep.icon);
+
+        endDateHeader = (TextView) findViewById(R.id.endDateHeader);
+        committeeHeader = (TextView) findViewById(R.id.committeeHeader);
+        recentBillsHeader = (TextView) findViewById(R.id.recentBillsHeader);
+
+        endDate = (EditText) findViewById(R.id.endDate);
+        endDate.setText("UNTIL DEATH");
+        committees = (EditText) findViewById(R.id.committees);
+        committees.setText("Food, Arts & Crafts, Decorating, Baking");
+        recentBills = (EditText) findViewById(R.id.recentBills);
+        recentBills.setText("POOPING, SLEEPING, TAX FRAUD");
 
         backButton = (Button) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {

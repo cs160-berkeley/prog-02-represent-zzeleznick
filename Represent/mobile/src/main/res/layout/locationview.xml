@@ -15,8 +15,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="BLAH"
-        android:textSize="20sp"
+        android:id="@+id/derpText"
+        android:text="Enter Zipcode"
+        android:textAllCaps="true"
         android:layout_marginTop="20dp"
         android:layout_marginStart="10dp" />
 
@@ -24,14 +25,19 @@
         android:id="@+id/zipcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="5"
         android:layout_marginTop="10dp"
+        android:layout_below="@id/derpText"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="10dp"
         />
 
     <TextView
         android:layout_width="match_parent"
+        android:id="@+id/altText"
         android:layout_height="30dp"
+        android:layout_below="@id/zipcode"
         android:text="OR"
         android:textSize="20sp"
         android:layout_marginTop="10dp"
@@ -39,6 +45,7 @@
 
     <Button
         android:id="@+id/locationButton"
+        android:layout_below="@id/altText"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:backgroundTint="@color/colorAccent"
