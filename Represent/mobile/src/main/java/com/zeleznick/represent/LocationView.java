@@ -32,6 +32,14 @@ public class LocationView extends Fragment {
         return locationView;
     }
 
+    public void goToMain() {
+        // swap fragments
+        MainActivity.SwiperAdapter mSwiperAdapter = new MainActivity.SwiperAdapter(getActivity().getSupportFragmentManager());
+        ViewPager mPager = (ViewPager) getActivity().findViewById(R.id.pager);
+        mPager.setAdapter(mSwiperAdapter);
+        mPager.setCurrentItem(1);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,12 +65,7 @@ public class LocationView extends Fragment {
                     }
                     else {
                         Toast.makeText(getContext(), "Found " + foundText, Toast.LENGTH_SHORT).show();
-
-                        // swap fragments
-                        MainActivity.SwiperAdapter mSwiperAdapter = new MainActivity.SwiperAdapter(getActivity().getSupportFragmentManager());
-                        ViewPager mPager = (ViewPager) getActivity().findViewById(R.id.pager);
-                        mPager.setAdapter(mSwiperAdapter);
-                        mPager.setCurrentItem(1);
+                        goToMain();
                     }
                     return true;
                 }
@@ -79,7 +82,8 @@ public class LocationView extends Fragment {
                 sendIntent.putExtra("CAT_NAME", "Fred");
                 Log.i("Location View", "About to Feed Fred");
                 getActivity().startService(sendIntent);
-                }
+                goToMain();
+            }
         });
         Log.i("Location View", "View created");
         return rootView;

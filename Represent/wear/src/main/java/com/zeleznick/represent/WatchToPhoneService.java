@@ -21,6 +21,7 @@ public class WatchToPhoneService extends Service implements GoogleApiClient.Conn
     private GoogleApiClient mWatchApiClient;
     private List<Node> nodes = new ArrayList<>();
 
+    /*
     @Override
     public void onCreate() {
         super.onCreate();
@@ -31,7 +32,26 @@ public class WatchToPhoneService extends Service implements GoogleApiClient.Conn
                 .build();
         //and actually connect it
         mWatchApiClient.connect();
+    }*/
+
+    @Override
+    public void onCreate() {
+        mWatchApiClient = new GoogleApiClient.Builder( this )
+                .addApi(Wearable.API )
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(Bundle connectionHint) {
+                        Log.d("WatchToPhone", "connected");
+                    }
+
+                    @Override
+                    public void onConnectionSuspended(int cause) {
+                        Log.d("WatchToPhone", "suspended");
+                    }
+                })
+                .build();
     }
+
 
     @Override
     public void onDestroy() {
@@ -47,7 +67,7 @@ public class WatchToPhoneService extends Service implements GoogleApiClient.Conn
 
     @Override //alternate method to connecting: no longer create this in a new thread, but as a callback
     public void onConnected(Bundle bundle) {
-        Log.d("T", "in onconnected");
+        Log.d("WEAR_TP", "in onconnected");
         Wearable.NodeApi.getConnectedNodes(mWatchApiClient)
                 .setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
                     @Override
@@ -60,6 +80,30 @@ public class WatchToPhoneService extends Service implements GoogleApiClient.Conn
                         Log.d("T", "sent");
                     }
                 });
+    }
+
+
+    @Override// Watch to Phone On Start
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // Which cat do we want to feed? Grab this info from INTENT
+        // which was passed over when we called startService
+        Bundle extras = intent.getExtras();
+        final String catName = extras.getString("CAT_NAME", "DEAD_CAT");
+
+        // Send the message with the cat name
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //first, connect to the apiclient
+                mWatchApiClient.connect();
+                //now that you're connected, send a massage with the cat name
+                Log.i("WatchToPhone", "About to Feed " + catName);
+                sendMessage("/send_toast", "Triggered from Watch");
+                sendMessage("/" + catName, catName);
+            }
+        }).start();
+
+        return START_STICKY;
     }
 
     @Override //we need this to implement GoogleApiClient.ConnectionsCallback

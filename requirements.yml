@@ -6,12 +6,16 @@ Does the video demonstrate all of the screens? (5pts):
 
 Does the Main View (mobile) allow users to input a zip code/current location? (5 pts):
 - Open both a Congressional View on the phone
-  - NO
+  - YES
 - Main View on the watch with the appropriate information?
   - NO
 
 - Does the changing the location result in a change in the results of the 2012 Vote View? (5 pts):
-  - NO
+  - YES
+
+- Does changing the accelerometer value of the watch (to simulate a shake) randomly select a location in the US, updating information accordingly? (5 points):
+  - YES
+
 
 - Do the Congressional View, Detailed View (mobile), and Watch View (wear) render all the correct information (5 pts):
   - (Mobile: Main, Congressional, Detailed)
@@ -25,8 +29,6 @@ Does the Main View (mobile) allow users to input a zip code/current location? (5
 - Does selecting a member of congress on the watch change the Detailed View on the phone? (5 pts):
   - NO
 
-- Does changing the accelerometer value of the watch (to simulate a shake) randomly select a location in the US, updating information accordingly? (5 points):
-  - NO
 
 
 telnet localhost 5554
@@ -36,3 +38,6 @@ sensor set acceleration 100 200
 sensor set acceleration 300 400
 
 adb -s 192.168.57.101:5555 -d forward tcp:5601 tcp:5601
+
+
+https://guides.codepath.com/android/ViewPager-with-FragmentPagerAdapter

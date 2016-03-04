@@ -1,7 +1,9 @@
 package com.zeleznick.represent;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.wearable.view.CardFrame;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,8 @@ public class RepView extends Fragment {
     int repNumber;
     ImageView imgIcon;
     TextView repName;
+    CardFrame card;
+
     static Representative reps[] = Representative.getBaseReps();
 
     static RepView init(int val) {
@@ -42,6 +46,13 @@ public class RepView extends Fragment {
         */
     }
 
+    public void updatePhone() {
+        Intent sendIntent = new Intent(getActivity().getBaseContext(), WatchToPhoneService.class);
+        sendIntent.putExtra("CAT_NAME", "Fred");
+        Log.i("Rep View", "About to Feed Fred");
+        getActivity().startService(sendIntent);
+    }
+
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(
@@ -55,6 +66,15 @@ public class RepView extends Fragment {
         repName.setText(fullName);
 
         Log.i("Rep View", "View created for " + repNumber + " and name " + fullName);
+        card = (CardFrame) rootView.findViewById(R.id.myCard);
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Rep View", "Card Clicked");
+                updatePhone();
+            }
+        });
+
         return rootView;
     }
 

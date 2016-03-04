@@ -21,9 +21,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class MainActivity extends FragmentActivity {
     static final int ITEMS = 4;
-    SwiperAdapter mSwiperAdapter;
+    static SwiperAdapter mSwiperAdapter;
     ViewPager mPager;
     TextView repName;
 
@@ -31,12 +33,16 @@ public class MainActivity extends FragmentActivity {
     private ShakeEventListener mSensorListener;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d("WEAR MAIN", "created.");
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+
         // 0.   Create SwiperAdapter
-        mSwiperAdapter = new SwiperAdapter(getSupportFragmentManager());
+        mSwiperAdapter = new SwiperAdapter(getSupportFragmentManager(), new Bundle());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mSwiperAdapter);
 
@@ -47,14 +53,20 @@ public class MainActivity extends FragmentActivity {
         mSensorListener.setOnShakeListener(new ShakeEventListener.OnShakeListener() {
             public void onShake() {
                 Log.d("WEAR MAIN", "shake detected.");
-                Toast.makeText(getApplicationContext(), "Shake!", Toast.LENGTH_SHORT).show();
+                int range = 10;
+                int offset = 10;
+                int num = offset + (int)(Math.random() * (range + 1));
+                Toast.makeText(getApplicationContext(), "D" + num, Toast.LENGTH_SHORT).show();
+                Log.i("WEAR MAIN", "Storing " + num);
+                mSwiperAdapter.fragmentBundle.putInt("district", num);
+                mSwiperAdapter.getItem(3);
+                mPager.setCurrentItem(3);
+                // mSwiperAdapter.notifyDataSetChanged();
+                // mPager.destroyDrawingCache();
+                // mPager.setCurrentItem(3);
             }
         });
         /* End Acceleration onCreate */
-
-        Log.d("WEAR MAIN", "created.");
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
 
         if (extras != null) {
             String catName = extras.getString("CAT_NAME");
@@ -78,9 +90,12 @@ public class MainActivity extends FragmentActivity {
         super.onPause();
     }
 
-    public static class SwiperAdapter extends FragmentPagerAdapter {
-        public SwiperAdapter(FragmentManager fragmentManager) {
+    public static class SwiperAdapter extends FragmentStatePagerAdapter {
+        private final Bundle fragmentBundle;
+
+        public SwiperAdapter(FragmentManager fragmentManager, Bundle data) {
             super(fragmentManager);
+            fragmentBundle = data;
         }
 
         @Override
@@ -91,20 +106,24 @@ public class MainActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int position) {
             Log.i("get_item", "Called with position: " + position);
-            switch (position) {
-                case 0: // Fragment # 0 - This will show on default
-                    // can add stuff to bundle with put string
-                    // then setArguments to Fragment before return
-                    return RepView.init(position);
-                case 1: // Fragment # 1 - This will show extra exercises
-                    return RepView.init(position);
-                case 2:
-                    return RepView.init(position);
-                case 3:
-                    return VoteView.init(position);
-                default:
-                    return RepView.init(position);
+            Fragment fragment;
+            if (position == 0) {
+                fragment = RepView.init(position);
             }
+            else if (position == 1) {
+                fragment = RepView.init(position);
+            }
+            else if (position == 2) {
+                fragment =  RepView.init(position);
+            }
+            else if (position == 3) {
+                fragment = VoteView.init(position);
+            }
+            else {
+                fragment = RepView.init(position);
+            }
+            fragment.setArguments(mSwiperAdapter.fragmentBundle);
+            return fragment;
         }
     }
 }
