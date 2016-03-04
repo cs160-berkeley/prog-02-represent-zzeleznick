@@ -3,12 +3,12 @@ package com.zeleznick.represent;
 /**
  * Created by zeleznick on 3/2/16.
  */
-public class LocationZ {
+public class LocationHelper {
     public double latitude, longitude;
-    public LocationZ(){
+    public LocationHelper(){
         super();
     }
-    public LocationZ(double latitude, double longitude){
+    public LocationHelper(double latitude, double longitude){
         super();
         this.latitude = latitude;
         this.longitude = longitude;

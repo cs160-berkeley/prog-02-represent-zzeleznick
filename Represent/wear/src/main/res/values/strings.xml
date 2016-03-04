@@ -2,4 +2,5 @@
     <string name="app_name">Represent</string>
     <string name="hello_world">Hello World!</string>
     <string name="hello_round">Hello Round World!</string>
+    <string name="instructions">Swipe to Continue</string>
 </resources>

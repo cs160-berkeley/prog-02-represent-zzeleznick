@@ -14,10 +14,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.MessageApi;
+import com.google.android.gms.wearable.Node;
+import com.google.android.gms.wearable.NodeApi;
+import com.google.android.gms.wearable.Wearable;
+
 public class MainActivity extends FragmentActivity {
     static final int ITEMS = 3;
     SwiperAdapter mSwiperAdapter;
     ViewPager mPager;
+
+    private static final String START_ACTIVITY = "/start_activity";
+    private static final String WEAR_MESSAGE_PATH = "/message";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +69,8 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -80,5 +91,5 @@ public class MainActivity extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }
