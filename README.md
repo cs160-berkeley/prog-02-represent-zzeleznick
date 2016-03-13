@@ -1,20 +1,19 @@
 # PROG 02: Represent!
 
-Briefly describe your app here.
+This application follows a narrow feature spec as specified by the CS 160 instructors and does not aim to solve any real need. Use with caution.
 
 ## Authors
 
-FirstName LastName ([your_email@berkeley.edu](mailto:your_email@berkeley.edu))
+Zachary Zeleznick ([zzeleznick@berkeley.edu](mailto:zzeleznick@berkeley.edu))
 
 ## Demo Video
 
-See [your demo video title here] (https://link_to_your_video)
+See [WatchLocation](https://youtu.be/lq2phIDBIXY)
 
 ## Screenshots
 
-<img src="screenshots/main.png" height="400" alt="Screenshot"/>
+<img src="screenshots/Launch Screen.png" height="400" alt="Screenshot"/>
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Any other support
+* My girlfriend for making me cookies while I wept about this project
